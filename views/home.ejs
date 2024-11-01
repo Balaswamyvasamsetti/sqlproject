@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Fitness Challenge App</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Fitness Challenge, <%= username %>!</h1>
+    </header>
+    <div class="layout">
+        <main class="main-container">
+            <h2>Your Fitness Journey Awaits!</h2>
+            <p>Join challenges, track your progress, and achieve your fitness goals!</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <h3>My Challenges</h3>
+                    <p>View your active fitness challenges and track your progress.</p>
+                    <a href="/my-challenges" class="btn">Go to My Challenges</a>
+                </div>
+                <div class="card">
+                    <h3>Create Challenge</h3>
+                    <p>Start a new fitness challenge for yourself or your friends.</p>
+                    <a href="/create-challenge" class="btn">Create a Challenge</a>
+                </div>
+                <div class="card">
+                    <h3>Challenges</h3>
+                    <p>View a list of fitness tasks that you can take up and complete.</p>
+                    <a href="/challenges" class="btn">View Challenges</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; 2024 Fitness Challenge App</p>
+    </footer>
+</body>
+</html>

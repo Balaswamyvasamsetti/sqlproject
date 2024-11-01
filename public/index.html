@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Fitness Challenge App</title>
+</head>
+<body>
+    <header>
+        <h1>Fitness Challenge App</h1>
+        <nav>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <main>
+        <div class="welcome-container">
+            <h2>Welcome to the Fitness Challenge App!</h2>
+            <p>Join challenges and track your fitness journey.</p>
+            <a href="register.html" class="cta-button">Get Started</a>
+        </div>
+    </main>
+    <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+    Chatbot.init({
+        chatflowid: "405c5314-3e25-4319-951d-3a1718051e82",
+        apiHost: "http://localhost:3000",
+        chatflowConfig: {
+            // topK: 2
+        },
+        theme: {
+            button: {
+                backgroundColor: "green",
+                right: 20,
+                bottom: 20,
+                size: 48, // small | medium | large | number
+                dragAndDrop: true,
+                iconColor: "white",
+                customIconSrc: "C:/lab/plsqllab/src/message.png",
+                autoWindowOpen: {
+                    autoOpen: true, // parameter to control automatic window opening
+                    openDelay: 2, // Optional parameter for delay time in seconds
+                    autoOpenOnMobile: false, // parameter to control automatic window opening in mobile
+                },
+            },
+            tooltip: {
+                showTooltip: true,
+                tooltipMessage: 'Fitnessbot',
+                tooltipBackgroundColor: 'black',
+                tooltipTextColor: 'white',
+                tooltipFontSize: 16,
+            },
+            chatWindow: {
+                showTitle: true,
+                title: 'Fitness Chatbot',
+                titleAvatarSrc: 'C:/lab/plsqllab/src/message.png',
+                showAgentMessages: true,
+                welcomeMessage: 'Hello! Welcome to Fitness Bot!',
+                errorMessage: 'This is a custom error message',
+                backgroundColor: "#ffffff",
+                backgroundImage: '', // If set, this will overlap the background color of the chat window.
+                height: 500,
+                width: 400,
+                fontSize: 16,
+                starterPromptFontSize: 15,
+                clearChatOnReload: false,
+                botMessage: {
+                    backgroundColor: "#f7f8ff",
+                    textColor: "#303235",
+                    showAvatar: true,
+                    avatarSrc: "C:\\lab\\plsqllab\\src\\bot.png",
+                    avatarSize: "40px", // Sets bot avatar size
+                },
+                userMessage: {
+                    backgroundColor: "#3B81F6",
+                    textColor: "#ffffff",
+                    showAvatar: true,
+                    avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
+                    avatarSize: "40px", // Sets user avatar size
+                },
+                textInput: {
+                    placeholder: 'Type your question',
+                    backgroundColor: '#ffffff',
+                    textColor: '#303235',
+                    sendButtonColor: '#3B81F6',
+                    maxChars: 50,
+                    maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 50 characters.',
+                    autoFocus: true,
+                    sendMessageSound: true,
+                    receiveMessageSound: true,
+                },
+                feedback: {
+                    color: 'green',
+                },
+                footer: {
+                    textColor: 'green',
+                    text: 'Powered by',
+                    company: 'Balaswamy',
+                    companyLink: 'cd',
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Challenges</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f4; 
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main { 
+            max-width: 800px; 
+            margin: 20px auto; 
+            padding: 20px; 
+            background: white; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th, td { 
+            padding: 12px; 
+            border: 1px solid #ccc; 
+            text-align: left; 
+            transition: background-color 0.3s;
+        }
+        th { 
+            background-color: #4CAF50; 
+            color: white; 
+        }
+        td:hover {
+            background-color: #f9f9f9;
+        }
+        .status-completed {
+            background-color: #357d18;
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .status-incomplete {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+        }
+        .edit-button {
+            background-color: #defc01d7;
+            color: rgb(0, 0, 0);
+        }
+        .edit-button:hover {
+            background-color: #b6b245;
+        }
+        .save-button {
+            background-color: #ec5204;
+            color: rgb(0, 0, 0);
+        }
+        .save-button:hover {
+            background-color: #af4507;
+        }
+        .edit-form {
+            display: none;
+        }
+        input[type="text"], input[type="date"], select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"]:focus, input[type="date"]:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Challenges</h1>
+        <nav>
+            <a href="/home">Home</a> |
+            <a href="/create-challenge">Create Challenge</a> |
+            <a href="/challenges">Challenges</a> |
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Your Challenges</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (challenges.length === 0) { %>
+                    <tr>
+                        <td colspan="6">No challenges found.</td>
+                    </tr>
+                <% } else { %>
+                    <% challenges.forEach(challenge => { %>
+                        <tr data-id="<%= challenge.id %>">
+                            <td>
+                                <span class="challenge-title"><%= challenge.title %></span>
+                                <input type="text" class="edit-title edit-form" value="<%= challenge.title %>" />
+                            </td>
+                            <td>
+                                <span class="challenge-description"><%= challenge.description %></span>
+                                <input type="text" class="edit-description edit-form" value="<%= challenge.description %>" />
+                            </td>
+                            <td>
+                                <span class="challenge-start-date"><%= challenge.start_date.toISOString().split('T')[0] %></span>
+                                <input type="date" class="edit-start-date edit-form" value="<%= challenge.start_date.toISOString().split('T')[0] %>" />
+                            </td>
+                            <td>
+                                <span class="challenge-end-date"><%= challenge.end_date.toISOString().split('T')[0] %></span>
+                                <input type="date" class="edit-end-date edit-form" value="<%= challenge.end_date.toISOString().split('T')[0] %>" />
+                            </td>
+                            <td>
+                                <span class="challenge-status <%= challenge.status === 'completed' ? 'status-completed' : 'status-incomplete' %>">
+                                    <%= challenge.status.charAt(0).toUpperCase() + challenge.status.slice(1) %>
+                                </span>
+                                <select class="edit-status edit-form">
+                                    <option value="incomplete" <%= challenge.status === 'incomplete' ? 'selected' : '' %>>Incomplete</option>
+                                    <option value="completed" <%= challenge.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="button edit-button" onclick="toggleEdit(this)">Edit</button>
+                                <button class="button save-button" onclick="saveChallenge(this)" style="display:none;">Save</button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } %>
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        function toggleEdit(button) {
+            const row = button.closest('tr');
+            const titleSpan = row.querySelector('.challenge-title');
+            const descriptionSpan = row.querySelector('.challenge-description');
+            const startDateSpan = row.querySelector('.challenge-start-date');
+            const endDateSpan = row.querySelector('.challenge-end-date');
+            const statusSpan = row.querySelector('.challenge-status');
+            const titleInput = row.querySelector('.edit-title');
+            const descriptionInput = row.querySelector('.edit-description');
+            const startDateInput = row.querySelector('.edit-start-date');
+            const endDateInput = row.querySelector('.edit-end-date');
+            const statusSelect = row.querySelector('.edit-status');
+            const saveButton = row.querySelector('.save-button');
+
+            if (button.textContent === 'Edit') {
+                [titleSpan, descriptionSpan, startDateSpan, endDateSpan, statusSpan].forEach(span => span.style.display = 'none');
+                [titleInput, descriptionInput, startDateInput, endDateInput, statusSelect].forEach(input => {
+                    input.style.display = 'inline';
+                    input.classList.add('edit-form');
+                });
+                button.style.display = 'none';
+                saveButton.style.display = 'inline';
+            }
+        }
+    
+        async function saveChallenge(button) {
+            const row = button.closest('tr');
+            const challengeId = row.getAttribute('data-id');
+            const title = row.querySelector('.edit-title').value;
+            const description = row.querySelector('.edit-description').value;
+            const startDate = row.querySelector('.edit-start-date').value;
+            const endDate = row.querySelector('.edit-end-date').value;
+            const status = row.querySelector('.edit-status').value;
+
+            console.log('Saving challenge:', { id: challengeId, title, description, startDate, endDate, status });
+    
+            const response = await fetch(`/challenges/${challengeId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, description, startDate, endDate, status })
+            });
+    
+            if (response.ok) {
+                row.querySelector('.challenge-title').textContent = title;
+                row.querySelector('.challenge-description').textContent = description;
+                row.querySelector('.challenge-start-date').textContent = startDate;
+                row.querySelector('.challenge-end-date').textContent = endDate;
+                const statusSpan = row.querySelector('.challenge-status');
+                statusSpan.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                statusSpan.className = `challenge-status ${status}`;
+
+                [row.querySelector('.challenge-title'), row.querySelector('.challenge-description'), row.querySelector('.challenge-start-date'), row.querySelector('.challenge-end-date'), statusSpan].forEach(span => span.style.display = 'inline');
+                row.querySelectorAll('.edit-form').forEach(input => input.style.display = 'none');
+                button.style.display = 'none';
+                row.querySelector('.edit-button').style.display = 'inline';
+            } else {
+                console.error('Error saving challenge:', response.statusText);
+            }
+        }
+    </script>
+</body>
+</html>

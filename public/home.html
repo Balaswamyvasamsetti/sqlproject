@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Fitness Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            margin: 20px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Fitness Challenge</h1>
+    </header>
+    
+    <nav>
+        <% if (username) { %>
+            <a href="/my-challenges">My Challenges</a>
+            <a href="/create-challenge">Create Challenge</a>
+            <a href="/leaderboard">Leaderboard</a>
+            <a href="/logout">Logout</a>
+        <% } else { %>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        <% } %>
+    </nav>
+    
+    <main>
+        <% if (username) { %>
+            <h2>Hello, <span id="username"><%= username %></span>!</h2>
+            <p>Get ready to take on some exciting fitness challenges!</p>
+        <% } else { %>
+            <h2>Hello, Guest!</h2>
+            <p>Please login or register to participate in the challenges!</p>
+        <% } %>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Fitness Challenge App</p>
+    </footer>
+
+    <script>
+        // This script can be used to fetch and display the username
+        // You can also implement AJAX calls to fetch user-specific data
+    </script>
+</body>
+</html>
